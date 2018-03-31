@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+set -e
+set -u
+set -o pipefail
+
+declare -r DEFAULT_OUTPUT_DIRECTORY_PATH="./node_module_docs"
+declare -r DEFAULT_NODE_MODULES_DIRECTORY_PATH="./node_modules"
+
+set +u
+declare -r outputDirectoryPath="${1:$DEFAULT_OUTPUT_DIRECTORY_PATH}"
+shift
+declare -r nodeModulesPath="${1:$DEFAULT_NODE_MODULES_DIRECTORY_PATH}"
+shift
+set -u
+
+mkdir -p "$outputDirectoryPath"
+
+while IFS= read -r -d '' readmePath;
+do
+	packageName=$(basename -a "$(dirname "$readmePath")")
+	readmeName=$(basename -a "$readmePath")
+
+	cp "$readmePath" "${outputDirectoryPath}/${packageName}_${readmeName}"
+done < <(cd "$nodeModulesPath" && find "$nodeModulesPath" -mindepth 1 -maxdepth 1 -type f -iname 'README*' -print0)
