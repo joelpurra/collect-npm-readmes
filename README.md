@@ -2,6 +2,14 @@
 
 Copy a project's first-level `npm` package readme files to a separate directory for easy access.
 
+
+
+> ## ⚠️ This project has been archived
+>
+> No future updates are planned. Feel free to continue using it, but expect no support.
+
+
+
 - Looks in `./node_modules` by default.
 - Collects all `README*` files.
 - Copies the READMEs to `./node_module_docs` (automatically created) by default.
